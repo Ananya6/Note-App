@@ -1,20 +1,38 @@
 const fs = require('fs');
-//const os = require('os');
 const _ =require('lodash');
 const yargs = require('yargs');
 
 const notes=require('./notes.js');
 
+var titleOptions={
+  describe:'Title of note',
+  demand: true,
+  alias: 't'
+};
+var bodyOptions={
+  describe:'Body of note',
+  demand: true,
+  alias:'b'
+};
 
-const yargv =yargs.argv;
-  // .command('add','Add a new note')
-
+const yargv =yargs
+  .command('add','Add a new note',{
+    title:titleOptions,
+    body:bodyOptions
+  })
+  .command('list','Listing all notes')
+  .command('read','Read a note',{
+    title:titleOptions,
+  })
+  .command('remove','Remove a note',{
+    title:titleOptions,
+  })
+  .help()
+  .argv;
 
 //var command=process.argv[2];
 var command=yargv._[0];
 console.log('Command: ',command);
-
-
 
 if(command==='add'){
   var note =notes.addNote(yargv.title,yargv.body);
@@ -45,22 +63,3 @@ else if(command==='remove'){
 }
 else
 console.log('Command not recognised');
-
-
-
-// console.log(_.isString('true'));
-// console.log(_.isString(true));
-//
-// var filteredArray=_.uniq([1,'Andrew',1,2,3,4]);
-// console.log(filteredArray);
-// var user=os.userInfo();
-// //console.log(user);
-// user.username='Ananya';
-//
-// var res=notes.addNote();
-// console.log(res);
-//
-// var sum=notes.add(2,5);
-// console.log(sum);
-// // console.log("Hi");
-// fs.appendFileSync('greetings.txt',`hello ${user.username} ! You are ${notes.age} years old. ` );
